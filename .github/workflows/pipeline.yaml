@@ -1,4 +1,4 @@
-name: checkout code
+name: Build and deploy app to ec2 instance
 on:
     push:
         branches:
@@ -10,3 +10,5 @@ jobs:
             - name: Print hello
               run: echo "first run on local worker"          
             
+            - name: Print OS version
+              run: uname -a
