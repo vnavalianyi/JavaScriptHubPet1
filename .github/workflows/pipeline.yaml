@@ -1,0 +1,12 @@
+name: checkout code
+on:
+    push:
+        branches:
+            - main
+jobs:
+    check_code:
+        runs-on: [local]
+        steps:
+            - name: Print hello
+              run: echo "first run on local worker"          
+            
