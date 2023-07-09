@@ -12,6 +12,17 @@ jobs:
             
             # - name: Build docker image
             #   run: docker build -t vnavalianyi/jscc:v1 -f app/Dockerfile app/.
+
+            - name: Docker meta
+              id: meta
+              uses: docker/metadata-action@v4
+              with:
+                images: |
+                  vnavalianyi/jscc
+                # generate Docker tags based on the following events/attributes
+                tags: |
+                  type=semver,pattern={{major}}.{{minor}}
+                  type=sha
             
             - name: Log in to Docker Hub
               uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -24,6 +35,5 @@ jobs:
               with:
                 context: app/.
                 push: true
-                tags: |
-                    vnavalianyi/jscc:latest
-                    vnavalianyi/jscc:1.0.0
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
