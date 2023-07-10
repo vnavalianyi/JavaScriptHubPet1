@@ -34,3 +34,23 @@ jobs:
                   vnavalianyi/jscc:latest
                   ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
+
+    Create_infrastructure_aws:
+      runs-on: [local]
+      needs: Build_and_push_docker_image
+      steps:
+          - name: Check out the repo
+            uses: actions/checkout@v3
+
+          - name: Configure AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v2
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: eu-central-1
+
+          - name: Terraform init & plan
+            run: |
+              cd terraform 
+              terraform init 
+              terraform plan
