@@ -51,6 +51,6 @@ jobs:
 
           - name: Terraform init & plan
             run: |
-              cd terraform 
+              cd Terraform 
               terraform init 
               terraform plan
