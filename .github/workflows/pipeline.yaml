@@ -4,15 +4,12 @@ on:
         branches:
             - main
 jobs:
-    Build_docker_image:
+    Build_and_push_docker_image:
         runs-on: [local]
         steps:
             - name: Check out the repo
               uses: actions/checkout@v3        
             
-            # - name: Build docker image
-            #   run: docker build -t vnavalianyi/jscc:v1 -f app/Dockerfile app/.
-
             - name: Docker meta
               id: meta
               uses: docker/metadata-action@v4
