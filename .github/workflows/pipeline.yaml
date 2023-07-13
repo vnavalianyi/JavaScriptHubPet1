@@ -62,16 +62,16 @@ jobs:
               TF_VAR_AMI_OWNER: ${{ secrets.TF_VAR_AMI_OWNER }}
               TF_VAR_REGION: ${{ secrets.TF_VAR_REGION }}
             run: |
-              export TF_VAR_VPC_CIDR: $TF_VAR_VPC_CIDR
-              export TF_VAR_SUB_CIDR: $TF_VAR_SUB_CIDR
-              export TF_VAR_AVAIL_ZONE: $TF_VAR_AVAIL_ZONE
-              export TF_VAR_ENV_PREFIX: $TF_VAR_ENV_PREFIX
-              export TF_VAR_MY_IP: $TF_VAR_MY_IP
-              export TF_VAR_INSTANCE_TYPE: $TF_VAR_INSTANCE_TYPE
-              export TF_VAR_KEY_NAME: $TF_VAR_KEY_NAME
-              export TF_VAR_IMAGE_NAME: $TF_VAR_IMAGE_NAME
-              export TF_VAR_AMI_OWNER: $TF_VAR_AMI_OWNER
-              export TF_VAR_REGION: $TF_VAR_REGION              
+              export TF_VAR_VPC_CIDR=$TF_VAR_VPC_CIDR
+              export TF_VAR_SUB_CIDR=$TF_VAR_SUB_CIDR
+              export TF_VAR_AVAIL_ZONE=$TF_VAR_AVAIL_ZONE
+              export TF_VAR_ENV_PREFIX=$TF_VAR_ENV_PREFIX
+              export TF_VAR_MY_IP=$TF_VAR_MY_IP
+              export TF_VAR_INSTANCE_TYPE=$TF_VAR_INSTANCE_TYPE
+              export TF_VAR_KEY_NAME=$TF_VAR_KEY_NAME
+              export TF_VAR_IMAGE_NAME=$TF_VAR_IMAGE_NAME
+              export TF_VAR_AMI_OWNER=$TF_VAR_AMI_OWNER
+              export TF_VAR_REGION=$TF_VAR_REGION              
               cd Terraform 
               terraform init 
               terraform plan
