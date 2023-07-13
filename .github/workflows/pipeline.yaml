@@ -51,28 +51,9 @@ jobs:
 
           - name: Terraform init & plan
             env:
-              VPC_CIDR: ${{ secrets.TF_VAR_VPC_CIDR }}
-              SUB_CIDR: ${{ secrets.TF_VAR_SUB_CIDR }}
-              AVAIL_ZONE: ${{ secrets.TF_VAR_AVAIL_ZONE }}
-              ENV_PREFIX: ${{ secrets.TF_VAR_ENV_PREFIX }}
-              MY_IP: ${{ secrets.TF_VAR_MY_IP }}
-              INSTANCE_TYPE: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
-              KEY_NAME: ${{ secrets.TF_VAR_KEY_NAME }}
-              IMAGE_NAME: ${{ secrets.TF_VAR_IMAGE_NAME }}
-              AMI_OWNER: ${{ secrets.TF_VAR_AMI_OWNER }}
-              REGION: ${{ secrets.TF_VAR_REGION }}
+              TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
             run: |
-              export VPC_CIDR=$VPC_CIDR
-              export SUB_CIDR=$SUB_CIDR
-              export AVAIL_ZONE=$AVAIL_ZONE
-              export ENV_PREFIX=$ENV_PREFIX
-              export MY_IP=$MY_IP
-              export INSTANCE_TYPE=$INSTANCE_TYPE
-              export KEY_NAME=$KEY_NAME
-              export IMAGE_NAME=$IMAGE_NAME
-              export AMI_OWNER=$AMI_OWNER
-              export REGION=$REGION
-              
+              echo "$TFVARS_FILE" > terraform.tfvars
               cd Terraform 
               terraform init 
               terraform plan
