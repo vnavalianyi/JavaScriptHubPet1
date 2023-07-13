@@ -4,40 +4,40 @@ on:
         branches:
             - main
 jobs:
-    Build_and_push_docker_image:
-        runs-on: [local]
-        steps:
-            - name: Check out the repo
-              uses: actions/checkout@v3        
+    # Build_and_push_docker_image:
+    #     runs-on: [local]
+    #     steps:
+    #         - name: Check out the repo
+    #           uses: actions/checkout@v3        
             
-            - name: Docker meta
-              id: meta
-              uses: docker/metadata-action@v4
-              with:
-                images: |
-                  vnavalianyi/jscc
-                tags: |
-                  type=sha
+    #         - name: Docker meta
+    #           id: meta
+    #           uses: docker/metadata-action@v4
+    #           with:
+    #             images: |
+    #               vnavalianyi/jscc
+    #             tags: |
+    #               type=sha
             
-            - name: Log in to Docker Hub
-              uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-              with:
-                username: ${{ secrets.DOCKER_USERNAME }}
-                password: ${{ secrets.DOCKER_PASSWORD }}
+    #         - name: Log in to Docker Hub
+    #           uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+    #           with:
+    #             username: ${{ secrets.DOCKER_USERNAME }}
+    #             password: ${{ secrets.DOCKER_PASSWORD }}
 
-            - name: Build and push
-              uses: docker/build-push-action@v4
-              with:
-                context: app/.
-                push: true
-                tags: |
-                  vnavalianyi/jscc:latest
-                  ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+    #         - name: Build and push
+    #           uses: docker/build-push-action@v4
+    #           with:
+    #             context: app/.
+    #             push: true
+    #             tags: |
+    #               vnavalianyi/jscc:latest
+    #               ${{ steps.meta.outputs.tags }}
+    #             labels: ${{ steps.meta.outputs.labels }}
 
     Create_infrastructure_aws:
       runs-on: [local]
-      needs: Build_and_push_docker_image
+      # needs: Build_and_push_docker_image
       steps:
           - name: Check out the repo
             uses: actions/checkout@v3
@@ -62,6 +62,16 @@ jobs:
               TF_VAR_AMI_OWNER: ${{ secrets.TF_VAR_AMI_OWNER }}
               TF_VAR_REGION: ${{ secrets.TF_VAR_REGION }}
             run: |
+              export TF_VAR_VPC_CIDR: $TF_VAR_VPC_CIDR
+              export TF_VAR_SUB_CIDR: $TF_VAR_SUB_CIDR
+              export TF_VAR_AVAIL_ZONE: $TF_VAR_AVAIL_ZONE
+              export TF_VAR_ENV_PREFIX: $TF_VAR_ENV_PREFIX
+              export TF_VAR_MY_IP: $TF_VAR_MY_IP
+              export TF_VAR_INSTANCE_TYPE: $TF_VAR_INSTANCE_TYPE
+              export TF_VAR_KEY_NAME: $TF_VAR_KEY_NAME
+              export TF_VAR_IMAGE_NAME: $TF_VAR_IMAGE_NAME
+              export TF_VAR_AMI_OWNER: $TF_VAR_AMI_OWNER
+              export TF_VAR_REGION: $TF_VAR_REGION              
               cd Terraform 
               terraform init 
               terraform plan
