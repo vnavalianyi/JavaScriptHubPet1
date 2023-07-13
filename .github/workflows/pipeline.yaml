@@ -51,16 +51,16 @@ jobs:
 
           - name: Terraform init & plan
             env:
-              TF_VAR_VPC_CIDR: ${{secrets.TF_VAR_VPC_CIDR}}
-              TF_VAR_SUB_CIDR: ${{secrets.TF_VAR_SUB_CIDR}}
-              TF_VAR_AVAIL_ZONE: ${{secrets.TF_VAR_AVAIL_ZONE}}
-              TF_VAR_ENV_PREFIX: ${{secrets.TF_VAR_ENV_PREFIX}}
-              TF_VAR_MY_IP: ${{secrets.TF_VAR_MY_IP}}
-              TF_VAR_INSTANCE_TYPE: ${{secrets.TF_VAR_INSTANCE_TYPE}}
-              TF_VAR_KEY_NAME: ${{ secrets.TF_VAR_KEY_NAME}}
-              TF_VAR_IMAGE_NAME: ${{secrets.TF_VAR_IMAGE_NAME}}
-              TF_VAR_AMI_OWNER: ${{ secrets.TF_VAR_AMI_OWNER}}
-              TF_VAR_REGION: ${{ secrets.TF_VAR_REGION}}
+              TF_VAR_VPC_CIDR: ${{ secrets.TF_VAR_VPC_CIDR }}
+              TF_VAR_SUB_CIDR: ${{ secrets.TF_VAR_SUB_CIDR }}
+              TF_VAR_AVAIL_ZONE: ${{ secrets.TF_VAR_AVAIL_ZONE }}
+              TF_VAR_ENV_PREFIX: ${{ secrets.TF_VAR_ENV_PREFIX }}
+              TF_VAR_MY_IP: ${{ secrets.TF_VAR_MY_IP }}
+              TF_VAR_INSTANCE_TYPE: ${{ secrets.TF_VAR_INSTANCE_TYPE }}
+              TF_VAR_KEY_NAME: ${{ secrets.TF_VAR_KEY_NAME }}
+              TF_VAR_IMAGE_NAME: ${{ secrets.TF_VAR_IMAGE_NAME }}
+              TF_VAR_AMI_OWNER: ${{ secrets.TF_VAR_AMI_OWNER }}
+              TF_VAR_REGION: ${{ secrets.TF_VAR_REGION }}
             run: |
               cd Terraform 
               terraform init 
