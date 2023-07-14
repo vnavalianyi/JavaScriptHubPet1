@@ -1,17 +1,40 @@
-variable vpc_id {}
+variable vpc_id {
+    type        = string
+}
 
-variable my_ip {}
+variable my_ip {
+    type        = string
+}
 
-variable env_prefix {}
+variable env_prefix {
+    type        = string
+}
 
-variable image_name {}
+variable image_name {
+    type        = string
+}
 
-variable ami_owner {}
+variable ami_owner {
+    type        = string
+}
 
-variable key_name {}
+variable key_name {
+    type        = string
+}
 
-variable instance_type {}
+variable ansible_ssh_key {
+    type        = string
+    sensitive   = true
+}
 
-variable subnet_id {}
+variable instance_type {
+    type        = string
+}
 
-variable avail_zone {}
+variable subnet_id {
+    type        = string
+}
+
+variable avail_zone {
+    type        = string
+}

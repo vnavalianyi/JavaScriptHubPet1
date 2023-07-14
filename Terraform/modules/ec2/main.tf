@@ -64,7 +64,12 @@ resource "aws_instance" "docker-server" {
   associate_public_ip_address = true
   key_name = var.key_name
   # user_data = file("entry-script.sh")
-   tags = {
+    tags = {
         Name: "${var.env_prefix}-server"
     }
+    
+    provisioner "local-exec" {
+      working_dir = "../Ansible"
+      command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ansible_ssh_key} --user ec2-user install-docker.yaml"
+  } 
 } 
