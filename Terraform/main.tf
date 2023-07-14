@@ -25,4 +25,9 @@ module "docker-server" {
   instance_type = var.instance_type
   subnet_id = module.docker-subnet.subnet.id 
   avail_zone = var.avail_zone
+
+ provisioner "local-exec" {
+    working_dir = "../Ansible"
+    command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ansible_ssh_key} --user ec2-user install-docker.yaml"
+  }  
 }
