@@ -53,7 +53,7 @@ jobs:
             env:
               TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
             run: |
-              echo "$TFVARS_FILE" > terraform.tfvars
               cd Terraform 
+              echo "$TFVARS_FILE" > terraform.tfvars
               terraform init 
               terraform plan
