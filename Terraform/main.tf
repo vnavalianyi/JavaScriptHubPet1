@@ -22,8 +22,9 @@ module "docker-server" {
   image_name = var.image_name
   ami_owner = var.ami_owner
   key_name = var.key_name
+  ansible_ssh_key = var.ansible_ssh_key
   instance_type = var.instance_type
   subnet_id = module.docker-subnet.subnet.id 
   avail_zone = var.avail_zone
- 
+  
 }

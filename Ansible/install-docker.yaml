@@ -1,0 +1,74 @@
+---
+- name: wait for ssh
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: ensure ssh port open
+      wait_for:
+        port: 22
+        delay: 20
+        timeout: 120
+        search_regex: OpenSSH
+        host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+      vars:
+        ansible_connection: local
+        ansible_python_interpreter: /usr/bin/python
+
+- name: install python3 & docker
+  hosts: all
+  become: yes
+  gather_facts: False
+  tasks:
+    - name: install docker & docker compose
+      get_url:
+        url: https://get.docker.com
+        dest: ./install-docker.sh
+
+    - name: Run Docker installation script
+      shell: sh ./install-docker.sh
+      args:
+        warn: false
+        executable: /bin/bash   
+
+    - name: start docker
+      systemd:
+        name: docker
+        state: started
+          
+- name: Add ec2-user to docker group
+  hosts: all
+  become: yes
+  tasks:          
+    - name: add user to docker group
+      user: 
+        name: ec2-user
+        groups: docker
+        append: yes
+    - name: relogin
+      meta: reset_connection
+
+# - name: start containers
+#   hosts: ec2
+#   vars_prompt:
+#     - name: docker_pass
+#       prompt: Enter docker login password
+#   vars_files:
+#     - docker-vars
+#   tasks:
+#     - name: docker login
+#       community.docker.docker_login:
+#       registry_url: https://index.docker.io/v1/
+#       username: docker
+#       password: "{{docker_pass}}"
+#     - name: copy docker compose
+#       copy:
+#         src: /path/to/compose
+#         dest: /home/ec2-user/docker-compose.yaml
+#     - name: run docker compose
+#       community.docker.docker_compose:
+#         project_src: /home/ec2-user/
+#         state: present
+    
+      
+
+      
