@@ -6,8 +6,8 @@
     - name: ensure ssh port open
       ansible.builtin.wait_for:
         port: 22
-        delay: 60
-        timeout: 240
+        delay: 20
+        timeout: 300
         search_regex: OpenSSH
         host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
       vars:
