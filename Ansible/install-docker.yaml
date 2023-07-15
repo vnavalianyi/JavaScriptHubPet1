@@ -4,15 +4,14 @@
   gather_facts: False
   tasks:
     - name: ensure ssh port open
-      wait_for:
+      ansible.builtin.wait_for:
         port: 22
-        delay: 20
-        timeout: 120
+        delay: 60
+        timeout: 240
         search_regex: OpenSSH
         host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
       vars:
         ansible_connection: local
-        ansible_python_interpreter: /usr/bin/python
 
 - name: install python3 & docker
   hosts: all
@@ -20,18 +19,18 @@
   gather_facts: False
   tasks:
     - name: install docker & docker compose
-      get_url:
+      ansible.builtin.get_url:
         url: https://get.docker.com
         dest: ./install-docker.sh
 
     - name: Run Docker installation script
-      shell: sh ./install-docker.sh
+      ansible.builtin.shell: sh ./install-docker.sh
       args:
         warn: false
         executable: /bin/bash   
 
     - name: start docker
-      systemd:
+      ansible.builtin.systemd:
         name: docker
         state: started
           
@@ -40,12 +39,13 @@
   become: yes
   tasks:          
     - name: add user to docker group
-      user: 
+      ansible.builtin.user: 
         name: ubuntu
         groups: docker
         append: yes
+
     - name: relogin
-      meta: reset_connection
+      ansible.builtin.meta: reset_connection
 
 # - name: start containers
 #   hosts: ec2

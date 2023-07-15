@@ -70,6 +70,6 @@ resource "aws_instance" "docker-server" {
     
     provisioner "local-exec" {
       working_dir = "../Ansible"
-      command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ansible_ssh_key} --user ec2-user install-docker.yaml"
+      command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ansible_ssh_key} --user ubuntu install-docker.yaml"
   } 
 } 
