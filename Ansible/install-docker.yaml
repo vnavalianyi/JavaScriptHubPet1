@@ -13,7 +13,7 @@
       vars:
         ansible_connection: local
 
-- name: install python3 & docker
+- name: install docker
   hosts: all
   become: yes
   gather_facts: False
@@ -26,7 +26,6 @@
     - name: Run Docker installation script
       ansible.builtin.shell: sh ./install-docker.sh
       args:
-        warn: false
         executable: /bin/bash   
 
     - name: start docker
