@@ -65,14 +65,14 @@ jobs:
               terraform apply -auto-approve
             #  terraform output -raw ec2_public_ip > ip.txt
 
-          - name: Save Terraform Outputs
-            id: save-output
-            run: |
-                echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
+          # - name: Save Terraform Outputs
+          #   id: save-output
+          #   run: |
+          #       echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
 
-          - name: Print Terraform Outputs
-            run: |
-                echo ${{ steps.save-output.outputs.ip }}
+          # - name: Print Terraform Outputs
+          #   run: |
+          #       echo ${{ steps.save-output.outputs.ip }}
 
 
     # Run_image:
