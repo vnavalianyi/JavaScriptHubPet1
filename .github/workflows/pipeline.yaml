@@ -69,7 +69,11 @@ jobs:
             id: save-output
             run: |
                 echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
-                echo ${{ env.ip }}
+
+          - name: Save Terraform Outputs
+            id: print-output
+            run: |
+                echo ${{ steps.save-output.outputs.ip }}
 
 
     # Run_image:
