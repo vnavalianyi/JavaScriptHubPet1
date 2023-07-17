@@ -1,4 +1,4 @@
-name: Build and deploy app to ec2 instance
+name: build and deploy app to ec2 instance
 on:
     push:
         branches:
@@ -9,7 +9,7 @@ env:
   AWS_REGION: eu-central-1
             
 jobs:
-    # Build_and_push_docker_image:
+    # build_and_push_docker_image:
     #     runs-on: [local]
     #     steps:
     #         - name: Check out the repo
@@ -39,9 +39,11 @@ jobs:
     #               ${{ steps.meta.outputs.tags }}
     #             labels: ${{ steps.meta.outputs.labels }}
 
-    Create_infrastructure_aws:
+    create_infrastructure_aws:
       runs-on: [local]
-      # needs: Build_and_push_docker_image
+      # needs: build_and_push_docker_image
+      outputs:
+        ip: "steps.save-output.outputs.ip"
       steps:
           - name: Check out the repo
             uses: actions/checkout@v3
@@ -73,14 +75,14 @@ jobs:
           # - name: Print Terraform Outputs
           #   run: echo ${{ steps.save-output.outputs.ip }}
 
-    Run_image:
+    run_image:
       runs-on: [local]
-      needs: Create_infrastructure_aws
+      needs: create_infrastructure_aws
       steps:
         - name: executing remote ssh commands using ssh key
           uses: appleboy/ssh-action@v0.1.10
           with:
-            host: ${{ steps.save-output.outputs.ip }}
+            host: ${{ needs.create_infrastructure_aws.outputs.ip }}
             username: ${{ secrets.SSH_USERNAME }}
             key_path: ${{ secrets.SSH_KEY_PATH }}
             script: docker run -d -p 80:3000 vnavalianyi/jscc
