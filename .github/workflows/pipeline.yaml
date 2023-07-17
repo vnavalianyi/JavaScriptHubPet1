@@ -70,12 +70,17 @@ jobs:
             working-directory: ./Terraform
             run: echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
 
-          - name: Print Terraform Outputs
-            run: echo ${{ steps.save-output.outputs.ip }}
+          # - name: Print Terraform Outputs
+          #   run: echo ${{ steps.save-output.outputs.ip }}
 
-    # Run_image:
-    #   runs-on: [local]
-    #   needs: Create_infrastructure_aws
-    #   steps:
-    #       - name: Login to server
-    #         run: 
+    Run_image:
+      runs-on: [local]
+      needs: Create_infrastructure_aws
+      steps:
+        - name: executing remote ssh commands using ssh key
+          uses: appleboy/ssh-action@v0.1.10
+          with:
+            host: ${{ steps.save-output.outputs.ip }}
+            username: ${{ secrets.SSH_USERNAME }}
+            key_path: ${{ secrets.SSH_KEY_PATH }}
+            script: docker run -d -p 80:3000 vnavalianyi/jscc
