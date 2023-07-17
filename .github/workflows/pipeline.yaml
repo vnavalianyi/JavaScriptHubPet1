@@ -56,8 +56,8 @@ jobs:
           - name: Terraform init & plan
             env:
               TFVARS_FILE: ${{ secrets.TFVARS_FILE }}
+            working-directory: ./Terraform
             run: |
-              cd Terraform 
               echo "$TFVARS_FILE" > terraform.tfvars
               terraform init
               terraform validate
@@ -65,15 +65,13 @@ jobs:
               terraform apply -auto-approve
             #  terraform output -raw ec2_public_ip > ip.txt
 
-          # - name: Save Terraform Outputs
-          #   id: save-output
-          #   run: |
-          #       echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
+          - name: Save Terraform Outputs
+            id: save-output
+            working-directory: ./Terraform
+            run: echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_ENV"
 
-          # - name: Print Terraform Outputs
-          #   run: |
-          #       echo ${{ steps.save-output.outputs.ip }}
-
+          - name: Print Terraform Outputs
+            run: echo ${{ steps.save-output.outputs.ip }}
 
     # Run_image:
     #   runs-on: [local]
