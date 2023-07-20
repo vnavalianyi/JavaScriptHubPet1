@@ -41,7 +41,7 @@ jobs:
 
     create_infrastructure_aws:
       runs-on: [local]
-      # needs: build_and_push_docker_image
+      needs: build_and_push_docker_image
       outputs:
         ip: ${{ steps.save-output.outputs.ip }}
       steps:
