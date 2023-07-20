@@ -72,8 +72,8 @@ jobs:
             working-directory: ./Terraform
             run: echo "ip=$(terraform output -raw ec2_public_ip)" >> "$GITHUB_OUTPUT"
 
-          # - name: Print Terraform Outputs
-          #   run: echo ${{ steps.save-output.outputs.ip }}
+          - name: Print Terraform Outputs
+            run: echo ${{ steps.save-output.outputs.ip }}
 
     run_image:
       runs-on: [local]
