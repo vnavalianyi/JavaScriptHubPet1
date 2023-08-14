@@ -10,7 +10,7 @@ terraform {
     organization = "VnProject1"
 
     workspaces {
-      name = "pet1"
+      name = "JavaScriptWorkspace"
     }  
  }
 }
