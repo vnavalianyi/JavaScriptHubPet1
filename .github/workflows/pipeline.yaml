@@ -10,7 +10,7 @@ env:
             
 jobs:
     build_and_push_docker_image:
-        runs-on: [local]
+        runs-on: [self-hosted]
         steps:
             - name: Check out the repo
               uses: actions/checkout@v3        
@@ -40,7 +40,7 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
 
     create_infrastructure_aws:
-      runs-on: [local]
+      runs-on: [self-hosted]
       needs: build_and_push_docker_image
       outputs:
         ip: ${{ steps.save-output.outputs.ip }}
@@ -76,7 +76,7 @@ jobs:
           #   run: echo ${{ steps.save-output.outputs.ip }}
 
     run_image:
-      runs-on: [local]
+      runs-on: [self-hosted]
       needs: create_infrastructure_aws
       steps:
         - name: executing remote ssh commands using ssh key
