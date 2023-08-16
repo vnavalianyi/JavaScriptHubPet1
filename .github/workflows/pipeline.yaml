@@ -1,8 +1,9 @@
 name: build and deploy app to ec2 instance
 on:
-    push:
-        branches:
-            - main
+  pull_request:
+  push:
+      branches:
+          - main
 
 env:
   IMAGE_NAME: vnavalianyi/jscc
