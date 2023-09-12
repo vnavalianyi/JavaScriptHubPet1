@@ -1,5 +1,6 @@
 name: build and deploy app to ec2 instance
 on:
+  workflow_dispatch:
   pull_request:
   push:
       branches:
